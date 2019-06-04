@@ -1,25 +1,40 @@
-<?php
-require("inc/header.php");
-?>
+<!-- h1>Liste des produits</!-->
 
 <?php
-require("Classes/Produit.php");
-echo "Bonjour";
-
-$hamac = new Produit();
-$hamac->name = "Hamac";
-
-var_dump($hamac);
-
-$parasol = new Produit();
-$parasol->name = "Parasol";
+require("autoload.php");
+// Connexion à MySQL
+$pdo = new PDO('mysql:host=localhost;dbname=php-2', 'root','',[PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']);
+// Requête SQL
+$query = "SELECT * FROM produit WHERE etat_publication = 1";
+// Execution de la requête
+$result = $pdo->query($query);
+// Récupération des résultats
+$products = $result->fetchAll(PDO::FETCH_CLASS, 'Produit');
+var_dump($products);
 
 ?>
 
-<h1>Liste des produits</h1>
+<?php require 'inc/header.php'; ?>
 
+<main class="container">
+    <h1 class="mt-2">Présentation des produits</h1>
+    <section class="row">
+        <?php foreach ($products as $product) : ?>
+            <div class="col-4">
+                <div class="card">
+                    <img src="/img/uploads/<?= $product->getImageName(); ?>" class="card-img-top"
+                         alt="Image de <?= $product->getName() ?>">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $product->getName(); ?></h5>
+                        <p class="card-text"><?= $product->getShortDescription(); ?></p>
+                        <a href="#" class="card-link btn btn-outline-info">Détail</a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </section>
+</main>
 
 <?php
 require("inc/footer.php");
 ?>
-
