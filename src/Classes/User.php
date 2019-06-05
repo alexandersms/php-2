@@ -70,10 +70,25 @@ class User {
         return $this->password;
     }
     /**
+     * Ajoute et hash le mot de passe
      * @param string $password
      */
     public function setPassword(string $password): void
     {
-        $this->password = $password;
+        // Hashage
+        $hash = password_hash($password, PASSWORD_BCRYPT);
+        // Stockage
+        $this->password = $hash;
+    }
+
+    public function getStrParamsSQL(): string
+    {
+        // On crée un tableau avec les 3 propriétés
+        $tab = [$this->username, $this->email, $this->password];
+        // On crée une chaîne de caractères séparés de virgules et les quotes simples
+        $str = implode("','", $tab);
+        // On a ajoute une quote simple au début et une à la fin
+        // On retourne l'ensemble
+        return "'" . $str . "'" ;
     }
 }
