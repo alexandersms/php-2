@@ -1,13 +1,14 @@
 <?php
 
-/**
+class FormValidator {
+    /**
  * Verification de la clef dans la superglobale POST et renvoi
  * de l'éventuel message d'erreur à afficher dans l'HTML (texte)
  * @param string $key La clef située dans $_POST
  * @param int $max Le nombre de caractères maximum autorisé
  * @return string L'éventuel message d'erreur
  */
-function checkPostText(string $key, int $max): string
+public static function checkPostText(string $key, int $max): string
 {
     // On teste l'existence et la non-nullité
     if (!array_key_exists($key, $_POST) || empty($_POST[$key])) {
@@ -29,7 +30,7 @@ function checkPostText(string $key, int $max): string
  * @param bool $isFloat Est-ce un nombre à virgule ? (intval, floatval)
  * @return string L'éventuel message d'erreur
  */
-function checkPostNumber(string $key, float $min, float $max, bool $isFloat = true): string
+public static function checkPostNumber(string $key, float $min, float $max, bool $isFloat = true): string
 {
     //// Existence
     if (!array_key_exists($key, $_POST) || $_POST[$key] === '' || is_null($_POST[$key])) {
@@ -59,7 +60,7 @@ function checkPostNumber(string $key, float $min, float $max, bool $isFloat = tr
  * @param string $key La clef dans $_POST
  * @return string Eventuel message d'erreur
  */
-function checkPostDate(string $key): string
+public static function checkPostDate(string $key): string
 {
     if (!array_key_exists($key, $_POST) || $_POST[$key] === '') {
         $message = "Merci de saisir la date";
@@ -77,13 +78,17 @@ function checkPostDate(string $key): string
     return $message ?? "";
 }
 
-function sanitizeRadio(string $key): void {
+public static function sanitizeRadio(string $key): void {
     if (!array_key_exists($key, $_POST)) {
         $_POST[$key] = false;
     } else {
         $_POST[$key] = true;
     }
 }
+
+}
+
+
 
 
 

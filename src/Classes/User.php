@@ -18,6 +18,17 @@ class User {
      */
     private $password;
 
+    /**
+     *Initialisation des propriétés de l'utilisateur à la construction de l'objet 
+     *@var 
+     */
+
+    public function __construct($username, $email, $password){
+        $this->username = $username;
+        $this->email = $email;
+        $this->setPassword($password);
+    }
+
 
 
     /**

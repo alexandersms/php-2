@@ -1,22 +1,22 @@
 <?php
 require dirname(__DIR__, 2) . '/autoload.php';
-require dirname(__DIR__) . '/functions/form-functions.php';
+
 // Verification formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $errorMessageUsername = checkPostText("username", 128);
-    $errorMessageEmail = checkPostText("email", 255);
-    $errorMessagePassword = checkPostText("password", 128);
+    $errorMessageUsername = FormValidator::checkPostText("username", 128);
+    $errorMessageEmail = FormValidator::checkPostText("email", 255);
+    $errorMessagePassword = FormValidator::checkPostText("password", 128);
 
     if (empty($errorMessageUsername) && empty($errorMessageUsername) && empty($errorMessageUsername)) {
 
         $database = new Database();
-        $database->connect();
+        //$database->connect();
 
         // On crée un utilisateur en local
-        $user = new User();
-        $user->setUsername($_POST['username']);
-        $user->setEmail($_POST['email']);
-        $user->setPassword($_POST['password']);
+        $user = new User($_POST['username'], $_POST['email'], $_POST['password']);
+        //$user->setUsername();
+        //$user->setEmail($_POST['email']);
+        //$user->setPassword($_POST['password']);
         $query = "INSERT INTO app_user (username, email, password)
                 VALUES (".$user->getStrParamsSQL().")";
         //var_dump($query);

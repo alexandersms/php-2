@@ -12,6 +12,14 @@
      */
     private $pdo;
 
+
+    // On crée un constructeur pour initialiser le PDO
+    public function __construct()
+    {
+      var_dump("Entrée dans le constructeur");
+      $this->connect();
+    }
+
      /**
       * Créer une instance PDO
       */
